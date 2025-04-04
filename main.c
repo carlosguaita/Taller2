@@ -56,16 +56,47 @@ int main (int argc, char *argv[]) {
                 {
                     printf("Producto encontrado\n");
                     printf("Ingrese el numero de elementos a vender: ");
-                    scanf("%d",&cantidad);
-                    venta = cantidad * precio[i];
-                    printf("La venta es: %f\n",venta);
-                    stock[i]-=cantidad;
-                    total_ganacia+=venta; 
+                    scanf("%d", &cantidad);
+                    if (cantidad <= stock[i])
+                    {
+                        venta = cantidad * precio[i];
+                        printf("La venta es: %f\n", venta);
+                        stock[i] -= cantidad;
+                        if (cantidad >= 20)
+                        {
+                            printf("10 porciento de descuento por 20 o mas unidades\n");
+                            venta*=0.9;
+                            printf("El valor de la venta con descuento es: %.2f\n",venta);
+                        }
+                        total_ganacia += venta;
+                    }else{
+                        printf("No se puede realizar la venta, no existe sufiente stock\n");
+                    }
                 }
                 
             }
-            
-            
+                     
+            break;
+        case 4:
+            int auxNumProd;
+            printf("Selecciones el numero del producto a rebastecer:\n");
+            printf("#\t\tID\t\tNombre\t\tStock\t\tPrecio\n");
+            for (int i=0; i<cont; i++){
+                printf("%d\t\t%s\t\t%s\t\t%d\t\t%.2f\n",i,Id[i],nombre[i],stock[i],precio[i]);
+            }
+            printf(">> ");
+            scanf("%d",&auxNumProd);
+            printf("Ingrese la cantidad del producto %s a reabastecer\n",nombre[auxNumProd]);
+            scanf("%d",&cantidad);
+            if (cantidad > 0)
+            {
+                stock[auxNumProd]+=cantidad;
+                printf("El nuevo stock del producto %s es: %d\n",nombre[auxNumProd], stock[auxNumProd]);
+            }
+
+            break;
+        case 5:
+            printf("Las ganancias totales son: %.2f\n",total_ganacia);
             break;
         default:
             break;
